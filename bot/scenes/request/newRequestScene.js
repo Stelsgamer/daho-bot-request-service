@@ -4,9 +4,10 @@ const {Scenes} =  require("telegraf");
 const newRequestScene = new Scenes.BaseScene('newRequestScene')
 
 
-newRequestScene.enter(async (ctx, next) => {
-    const {message_id} = await ctx.reqply("asda")
-    ctx.scene.state.lastMessageId = message_id
+newRequestScene.enter(async (ctx) => {
+
+    await ctx.reply("Отправьте ФИО в ответном сообщении")
+
 })
 
 //catch callback

@@ -43,10 +43,19 @@ bot.action(/.+/, async(ctx) => {
 
             if (actionNuggets[1] === 'enter'){
 
-                // console.log(ctx.scenete)
+                console.log(ctx.session.__scenes.state.lastMessagesId)
+
+                try{
+                    await ctx.deleteMessages(ctx.session.__scenes.state.lastMessagesId)
+
+                }catch (e) {
+                    console.log(e)
+                }
+
+
 
                 await ctx.answerCbQuery()
-                return await ctx.scene.enter(actionNuggets[2])
+                // return await ctx.scene.enter(actionNuggets[2])
             }
         }
 
@@ -77,13 +86,9 @@ bot.on(message("text"), async (ctx) => {
             const {message_id} = await ctx.reply("Действие не распознано!")
 
 
-            const lastMessageId = ctx.scene.lastMessageId || []
-
-            lastMessageId.push(message_id)
-
-            ctx.state.lastMessageId = lastMessageId
 
 
+            ctx.state.lastMessagesId = message_id
             return await ctx.scene.enter("helpScene")
         }catch (e) {
             return await ctx.reply(`Ошибка: ${e}`)
